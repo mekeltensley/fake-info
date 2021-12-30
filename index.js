@@ -1,38 +1,63 @@
 const axios = require('axios');
 
-//REQUESTS Data from API URL
+// Create a function for GET data from API URL
+//Then CHANGES THE DATA TO STRING FORMAT FOR PARSING 
 
-axios.get('https://reqres.in/api/users?page=2')
-.then(function(response) {
-    //displays data in the terminal as an array of objects
-    // console.log(response.data.data);
+// async function getData() {
 
-    // Returns API data stored in an object form
-    const myJSON = response.data.data;
-    console.log(myJSON);
+const getData = async () => {
+    try {
+        // const response = await axios.get('https://reqres.in/api/users');
+        // console.log(response.data.data);
+        // const jsonResult = await JSON.stringify(response.data.data);
+        // console.log(jsonResult);
+        return await axios.get('https://reqres.in/api/users');
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-    //Checks the data type
-    console.log(typeof myJSON );
+// getData();
 
-    //Turns data into a string in JSON format
-    let jsonResult = JSON.stringify(myJSON)
-    console.log(jsonResult);
+const transformData = async () => {
+    const response = await getData();
+    let data = response.data.data;
+    console.log(data);
+    if (data) {
+        let jsonResult = await JSON.stringify(data);
+        console.log(jsonResult);
+    }
+}
 
-    // Turn string data into a dictionary
+transformData();
 
-    // let result = JSON.parse(jsonResult);
+const sendData = async () => {
+    try {
+        const postResponse = await axios.post('https://reqres.in/api/register', {
+            email: "eve.holt@reqres.in",
+            password: "pistol"
+        });
+        console.log(postResponse);
+    } catch (error) {
+        console.log(error);
+    }  
+};
 
-    //   //Create a dictionary from JSON Object
+sendData();
 
-    //    let randomNames = {};
-
-    //   for(let i = 0; i < result.length; i++) {
-    //       names = result.email[i];
-    //       result[ jsonResult.id ] = names;          
-    //   }
-    //   console.log(jsonResult[12].email);
-})
-.catch(function(err){
-    console.log(err);
-});
-
+//OR do it this way 
+// axios.get('https://reqres.in/api/users')
+//     .then(function (response) {
+//         //displays data in the terminal as an array of objects
+//         console.log(response.data.data);
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//     })
+//     //Convert Javascript Object Literal to JSON String
+//     //Use JSON.stringify()
+//     .then(function (response) {
+//         const jsonResult = JSON.stringify(response);
+//         console.log(jsonResult);
+//         console.log(typeof jsonResult);
+//     });
