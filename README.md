@@ -1,3 +1,3 @@
 # fake-info
 
-## API Practice
+## API Practice using fake info from a third party API
